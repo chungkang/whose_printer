@@ -18,7 +18,7 @@ const Item = ({ name, age }) => (
   </View>
 );
 
-const ListScreen = ({navigation}) => {
+const ListScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <Item name={item.name} age={item.age} />
   );
@@ -26,13 +26,6 @@ const ListScreen = ({navigation}) => {
   let baseList = [
     { name: "Friend #1", age: 20 },
     { name: "Friend #2", age: 21 },
-    { name: "Friend #3", age: 22 },
-    { name: "Friend #4", age: 23 },
-    { name: "Friend #5", age: 24 },
-    { name: "Friend #6", age: 25 },
-    { name: "Friend #7", age: 26 },
-    { name: "Friend #8", age: 27 },
-    { name: "Friend #9", age: 28 },
   ];
 
   const [list, setList] = useState(baseList);
@@ -42,7 +35,7 @@ const ListScreen = ({navigation}) => {
 
     let result = await DocumentPicker.getDocumentAsync({});
 
-    //  alert(result.uri);
+    //    alert(result.uri);
 
     // Object {
     //   "name": "CJZ2021710205844.pdf",
@@ -50,11 +43,9 @@ const ListScreen = ({navigation}) => {
     //   "type": "success",
     //   "uri": "file:///var/mobile/Containers/Data/Application/2B67E86E-6FDA-40FB-9BFF-6D2851940317/Library/Caches/ExponentExperienceData/%2540anonymous%252Frn-starter-1-2da7c852-f8af-4e82-9252-d5ef33b91e31/DocumentPicker/EF4E5F54-8015-4053-AFA2-17EAAE51E971.pdf",
     // }
-    console.log(result);
-
     baseList.push({ name: result.name, age: 0 });
-    setList(baseList)
-    console.log(list);
+    //    console.log(list);
+    setList(baseList);
   };
 
 
@@ -70,32 +61,30 @@ const ListScreen = ({navigation}) => {
 
   return (
     <View>
-      <ScrollView>
-        <View
-          style={{
-            flexDirection: "row",
-            height: 100,
-            padding: 20,
-          }}
-        >
-          <View style={{ flex: 0.5 }}>
-            <Text>{navigation.getParam('printerId')} - 프린터</Text>
-            <Text>상세정보</Text>
-          </View>
-          <View style={{ flex: 0.5 }}>
-            <Button title="출력요청" color="#841584" />
-          </View>
+      <View
+        style={{
+          flexDirection: "row",
+          height: 100,
+          padding: 20,
+        }}
+      >
+        <View style={{ flex: 0.5 }}>
+          <Text>{navigation.getParam('printerId')} - 프린터</Text>
+          <Text>상세정보</Text>
         </View>
+        <View style={{ flex: 0.5 }}>
+          <Button title="출력요청" color="#841584" />
+        </View>
+      </View>
 
-        <View>
-          <Button title="파일 업로드" onPress={_pickDocument} />
-        </View>
-        <FlatList
-          data={list}
-          renderItem={renderItem}
-          keyExtractor={item => item.name}
-        />
-      </ScrollView>
+      <View>
+        <Button title="파일 업로드" onPress={_pickDocument} />
+      </View>
+      <FlatList
+        data={list}
+        renderItem={renderItem}
+        keyExtractor={item => item.name}
+      />
     </View>
   );
 };
