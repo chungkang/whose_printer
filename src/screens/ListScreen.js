@@ -9,9 +9,19 @@ import {
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 
+// 리스트에 쓰이는 커스텀 태그 컴포넌트
+const Item = ({ name, age }) => (
+  <View style={styles.item}>
+    <Text key={name} style={styles.textStyle}>
+      {name} - Age {age}
+    </Text>
+  </View>
+);
 
-const ListScreen = ({ marker }) => {
-  
+const ListScreen = ({navigation}) => {
+  const renderItem = ({ item }) => (
+    <Item name={item.name} age={item.age} />
+  );
 
   let baseList = [
     { name: "Friend #1", age: 20 },
@@ -29,6 +39,7 @@ const ListScreen = ({ marker }) => {
 
   // 파일 업로드 기능
   _pickDocument = async () => {
+
     let result = await DocumentPicker.getDocumentAsync({});
 
     //  alert(result.uri);
@@ -59,19 +70,6 @@ const ListScreen = ({ marker }) => {
 
   return (
     <View>
-      {/* 
-      <FlatList
-        keyExtractor={friend => friend.name}
-        data={friends}
-        renderItem={({ item }) => {
-          return (
-            <Text style={styles.textStyle}>
-              {item.name} - Age {item.age}
-            </Text>
-          );
-        }}
-      /> */}
-
       <ScrollView>
         <View
           style={{
@@ -81,7 +79,7 @@ const ListScreen = ({ marker }) => {
           }}
         >
           <View style={{ flex: 0.5 }}>
-            <Text>프린터 명</Text>
+            <Text>{navigation.getParam('printerId')} - 프린터</Text>
             <Text>상세정보</Text>
           </View>
           <View style={{ flex: 0.5 }}>
@@ -92,12 +90,11 @@ const ListScreen = ({ marker }) => {
         <View>
           <Button title="파일 업로드" onPress={_pickDocument} />
         </View>
-
-        {list.map((item, name) => (
-          <Text key={name} style={styles.textStyle}>
-            {name} - Age {item.age}
-          </Text>
-        ))}
+        <FlatList
+          data={list}
+          renderItem={renderItem}
+          keyExtractor={item => item.name}
+        />
       </ScrollView>
     </View>
   );
