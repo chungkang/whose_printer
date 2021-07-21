@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,17 +9,11 @@ import {
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 
-// 파일 업로드 기능
-_pickDocument = async () => {
-  let result = await DocumentPicker.getDocumentAsync({});
-
-  alert(result.uri);
-
-  console.log(result);
-};
 
 const ListScreen = ({ marker }) => {
-  const friends = [
+  
+
+  let baseList = [
     { name: "Friend #1", age: 20 },
     { name: "Friend #2", age: 21 },
     { name: "Friend #3", age: 22 },
@@ -31,11 +25,37 @@ const ListScreen = ({ marker }) => {
     { name: "Friend #9", age: 28 },
   ];
 
+  const [list, setList] = useState(baseList);
+
+  // 파일 업로드 기능
+  _pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({});
+
+    //  alert(result.uri);
+
+    // Object {
+    //   "name": "CJZ2021710205844.pdf",
+    //   "size": 555892,
+    //   "type": "success",
+    //   "uri": "file:///var/mobile/Containers/Data/Application/2B67E86E-6FDA-40FB-9BFF-6D2851940317/Library/Caches/ExponentExperienceData/%2540anonymous%252Frn-starter-1-2da7c852-f8af-4e82-9252-d5ef33b91e31/DocumentPicker/EF4E5F54-8015-4053-AFA2-17EAAE51E971.pdf",
+    // }
+    console.log(result);
+
+    baseList.push({ name: result.name, age: 0 });
+    setList(baseList)
+    console.log(list);
+  };
+
+
   // 화면이 처음 마운트 될 때마 실행
   useEffect(() => {
     console.log("List 화면이 마운트 될 때 실행");
-    console.log(marker);
   }, []);
+
+  // 렌더링 될 때 마다 실행
+  useEffect(() => {
+    console.log("렌더링 될 때 마다 실행");
+  });
 
   return (
     <View>
@@ -73,7 +93,7 @@ const ListScreen = ({ marker }) => {
           <Button title="파일 업로드" onPress={_pickDocument} />
         </View>
 
-        {friends.map((item, name) => (
+        {list.map((item, name) => (
           <Text key={name} style={styles.textStyle}>
             {name} - Age {item.age}
           </Text>
