@@ -64,6 +64,10 @@ const markers = [
 ];
 
 const ComponentsScreen = ({ navigation }) => {
+  state={
+    printerId:null
+  }
+
   // 현위치 좌표
   const [currentLatitude, setCurrentLatitude] = useState(LATITUDE);
   const [currentLongitude, setCurrentLongtude] = useState(LONGITUDE);
@@ -137,7 +141,7 @@ const ComponentsScreen = ({ navigation }) => {
           >
             <Callout
               style={styles.plainView}
-              onPress={() => navigation.navigate("List")}
+              onPress={() => navigation.navigate("List", {printerId: marker.title})}
             >
               <View>
                 <Text>{marker.title}</Text>
