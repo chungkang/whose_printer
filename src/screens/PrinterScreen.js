@@ -18,7 +18,7 @@ const Item = ({ name, age }) => (
   </View>
 );
 
-const ListScreen = ({ navigation }) => {
+const PrinterScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <Item name={item.name} age={item.age} />
   );
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListScreen;
+export default PrinterScreen;

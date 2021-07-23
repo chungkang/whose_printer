@@ -63,7 +63,7 @@ const markers = [
   },
 ];
 
-const ComponentsScreen = ({ navigation }) => {
+const MapScreen = ({ navigation }) => {
   state={
     printerId:null
   }
@@ -141,7 +141,7 @@ const ComponentsScreen = ({ navigation }) => {
           >
             <Callout
               style={styles.plainView}
-              onPress={() => navigation.navigate("List", {printerId: marker.title})}
+              onPress={() => navigation.navigate("Printer", {printerId: marker.title})}
             >
               <View>
                 <Text>{marker.title}</Text>
@@ -180,4 +180,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComponentsScreen;
+export default MapScreen;
