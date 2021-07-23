@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-native";
 import * as Location from "expo-location";
+import * as SplashScreen from 'expo-splash-screen';
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,6 +19,18 @@ const LONGITUDE = 127.00085;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
+
+function sleep (ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+async function delay_splash() {
+  await SplashScreen.preventAutoHideAsync();
+  await sleep(3000);
+  await SplashScreen.hideAsync();    
+};
 
 // 마커 임시로 사용
 const markers = [
@@ -67,6 +80,8 @@ const MapScreen = ({ navigation }) => {
   state={
     printerId:null
   }
+
+  delay_splash();
 
   // 현위치 좌표
   const [currentLatitude, setCurrentLatitude] = useState(LATITUDE);
