@@ -2,17 +2,17 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from './src/screens/HomeScreen';
-import ComponentsScreen from './src/screens/ComponentsScreen';
+import MapScreen from './src/screens/MapScreen';
 import ListScreen from './src/screens/ListScreen';
 
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Components: ComponentsScreen,
+    Map: MapScreen,
     List: ListScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Map',
     defaultNavigationOptions: {
       title: '누구의 프린터',
     },

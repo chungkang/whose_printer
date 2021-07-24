@@ -9,6 +9,7 @@ import {
   Button,
 } from "react-native";
 import * as Location from "expo-location";
+import centersMarkers from '../../assets/centers.json';
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,49 +20,52 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 let id = 0;
 
+// 주민센터 위치 좌표
+const markers = Object.values(centersMarkers);
+
 // 마커 임시로 사용
-const markers = [
-  {
-    id: 0,
-    amount: 99,
-    coordinate: {
-      latitude: LATITUDE,
-      longitude: LONGITUDE,
-    },
-    title: "김씨네",
-    description: "아파트",
-  },
-  {
-    id: 1,
-    amount: 199,
-    coordinate: {
-      latitude: LATITUDE + 0.004,
-      longitude: LONGITUDE - 0.004,
-    },
-    title: "이씨네",
-    description: "사무실",
-  },
-  {
-    id: 2,
-    amount: 285,
-    coordinate: {
-      latitude: LATITUDE - 0.004,
-      longitude: LONGITUDE - 0.004,
-    },
-    title: "박씨네",
-    description: "관공서",
-  },
-  {
-    id: 3,
-    amount: 28,
-    coordinate: {
-      latitude: LATITUDE - 0.0,
-      longitude: LONGITUDE - 0.004,
-    },
-    title: "공씨네",
-    description: "주민센터",
-  },
-];
+// const markers = [
+//   {
+//     id: 0,
+//     amount: 99,
+//     coordinate: {
+//       latitude: LATITUDE,
+//       longitude: LONGITUDE,
+//     },
+//     title: "김씨네",
+//     description: "아파트",
+//   },
+//   {
+//     id: 1,
+//     amount: 199,
+//     coordinate: {
+//       latitude: LATITUDE + 0.004,
+//       longitude: LONGITUDE - 0.004,
+//     },
+//     title: "이씨네",
+//     description: "사무실",
+//   },
+//   {
+//     id: 2,
+//     amount: 285,
+//     coordinate: {
+//       latitude: LATITUDE - 0.004,
+//       longitude: LONGITUDE - 0.004,
+//     },
+//     title: "박씨네",
+//     description: "관공서",
+//   },
+//   {
+//     id: 3,
+//     amount: 28,
+//     coordinate: {
+//       latitude: LATITUDE - 0.0,
+//       longitude: LONGITUDE - 0.004,
+//     },
+//     title: "공씨네",
+//     description: "주민센터",
+//   },
+// ];
 
 const ComponentsScreen = ({ navigation }) => {
   state={
@@ -86,6 +90,11 @@ const ComponentsScreen = ({ navigation }) => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
+
+
+      // 데이터 조회 후 marker에 추가
+    
+
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -132,20 +141,21 @@ const ComponentsScreen = ({ navigation }) => {
         showsUserLocation
         showsMyLocationButton
       >
-        {markers.map((marker, index) => (
+        {markers.map((marker, center_id) => (
           <Marker
-            key={index}
+            key={center_id}
             coordinate={marker.coordinate}
             //  title={marker.title}
             //  description={marker.description}
           >
             <Callout
               style={styles.plainView}
+//              onPress={() => marker.type=="center"?'':navigation.navigate("List", {printerId: marker.title})}
               onPress={() => navigation.navigate("List", {printerId: marker.title})}
             >
               <View>
-                <Text>{marker.title}</Text>
-                <Text>{marker.description}</Text>
+                <Text>{marker.center}</Text>
+                <Text>{marker.tel}</Text>
               </View>
             </Callout>
           </Marker>
