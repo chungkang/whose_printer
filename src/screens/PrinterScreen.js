@@ -25,6 +25,7 @@ const PrinterScreen = ({ navigation }) => {
 
   let baseList = [
     { name: "Friend #1", age: 20 },
+    { name: "Friend #2", age: 21 },
   ];
 
   const [list, setList] = useState(baseList);
