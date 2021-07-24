@@ -3,13 +3,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from './src/screens/HomeScreen';
 import MapScreen from './src/screens/MapScreen';
-import ListScreen from './src/screens/ListScreen';
+import PrinterScreen from './src/screens/PrinterScreen';
 
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
     Map: MapScreen,
-    List: ListScreen,
+    Printer: PrinterScreen,
   },
   {
     initialRouteName: 'Map',

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import centersMarkers from '../../assets/centers.json';
+import * as SplashScreen from 'expo-splash-screen';
 
 const { width, height } = Dimensions.get("window");
 
@@ -22,6 +23,18 @@ let id = 0;
 
 // 주민센터 위치 좌표
 const markers = Object.values(centersMarkers);
+
+function sleep (ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+async function delay_splash() {
+  await SplashScreen.preventAutoHideAsync();
+  await sleep(3000);
+  await SplashScreen.hideAsync();    
+};
 
 // 마커 임시로 사용
 // const markers = [
@@ -67,10 +80,12 @@ const markers = Object.values(centersMarkers);
 //   },
 // ];
 
-const ComponentsScreen = ({ navigation }) => {
+const MapScreen = ({ navigation }) => {
   state={
     printerId:null
   }
+
+  delay_splash();
 
   // 현위치 좌표
   const [currentLatitude, setCurrentLatitude] = useState(LATITUDE);
@@ -150,8 +165,7 @@ const ComponentsScreen = ({ navigation }) => {
           >
             <Callout
               style={styles.plainView}
-//              onPress={() => marker.type=="center"?'':navigation.navigate("List", {printerId: marker.title})}
-              onPress={() => navigation.navigate("List", {printerId: marker.title})}
+              onPress={() => navigation.navigate("Printer", {printerId: marker.center_id})}
             >
               <View>
                 <Text>{marker.center}</Text>
@@ -190,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ComponentsScreen;
+export default MapScreen;
