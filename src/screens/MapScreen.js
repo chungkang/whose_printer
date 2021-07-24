@@ -155,6 +155,7 @@ const MapScreen = ({ navigation }) => {
         }}
         showsUserLocation
         showsMyLocationButton
+        minZoomLevel = {13}
       >
         {markers.map((marker, center_id) => (
           <Marker
@@ -165,7 +166,7 @@ const MapScreen = ({ navigation }) => {
           >
             <Callout
               style={styles.plainView}
-              onPress={() => navigation.navigate("Printer", {printerId: marker.center_id})}
+              onPress={() => navigation.navigate("Printer", {center: marker.center, tel: marker.tel})}
             >
               <View>
                 <Text>{marker.center}</Text>

@@ -25,7 +25,6 @@ const PrinterScreen = ({ navigation }) => {
 
   let baseList = [
     { name: "Friend #1", age: 20 },
-    { name: "Friend #2", age: 21 },
   ];
 
   const [list, setList] = useState(baseList);
@@ -69,8 +68,8 @@ const PrinterScreen = ({ navigation }) => {
         }}
       >
         <View style={{ flex: 0.5 }}>
-          <Text>{navigation.getParam('printerId')} - 프린터</Text>
-          <Text>상세정보</Text>
+          <Text>{navigation.getParam('center')}</Text>
+          <Text>{navigation.getParam('tel')}</Text>
         </View>
         <View style={{ flex: 0.5 }}>
           <Button title="출력요청" color="#841584" />
