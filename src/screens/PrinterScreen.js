@@ -46,6 +46,7 @@ const PrinterScreen = ({ navigation }) => {
     baseList.push({ name: result.name, age: 0 });
     //    console.log(list);
     setList(baseList);
+
   };
 
 
