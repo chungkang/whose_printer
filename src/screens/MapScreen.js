@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Marker, Callout, Modal } from "react-native-maps";
+import MapView, { Marker, Callout } from "react-native-maps";
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
-  TouchableOpacity,
+  Alert,
+  Modal,
+  Pressable,
   Button,
 } from "react-native";
 import * as Location from "expo-location";
@@ -24,7 +26,7 @@ let id = 0;
 // 주민센터 위치 좌표
 const markers = Object.values(centersMarkers);
 
-function sleep (ms) {
+function sleep(ms) {
   return new Promise(
     resolve => setTimeout(resolve, ms)
   );
@@ -33,7 +35,7 @@ function sleep (ms) {
 async function delay_splash() {
   await SplashScreen.preventAutoHideAsync();
   await sleep(3000);
-  await SplashScreen.hideAsync();    
+  await SplashScreen.hideAsync();
 };
 
 // 마커 임시로 사용
@@ -48,41 +50,11 @@ async function delay_splash() {
 //     title: "김씨네",
 //     description: "아파트",
 //   },
-//   {
-//     id: 1,
-//     amount: 199,
-//     coordinate: {
-//       latitude: LATITUDE + 0.004,
-//       longitude: LONGITUDE - 0.004,
-//     },
-//     title: "이씨네",
-//     description: "사무실",
-//   },
-//   {
-//     id: 2,
-//     amount: 285,
-//     coordinate: {
-//       latitude: LATITUDE - 0.004,
-//       longitude: LONGITUDE - 0.004,
-//     },
-//     title: "박씨네",
-//     description: "관공서",
-//   },
-//   {
-//     id: 3,
-//     amount: 28,
-//     coordinate: {
-//       latitude: LATITUDE - 0.0,
-//       longitude: LONGITUDE - 0.004,
-//     },
-//     title: "공씨네",
-//     description: "주민센터",
-//   },
 // ];
 
 const MapScreen = ({ navigation }) => {
-  state={
-    printerId:null
+  state = {
+    printerId: null,
   }
 
   delay_splash();
@@ -108,8 +80,6 @@ const MapScreen = ({ navigation }) => {
 
 
       // 데이터 조회 후 marker에 추가
-    
-
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
@@ -155,7 +125,7 @@ const MapScreen = ({ navigation }) => {
         }}
         showsUserLocation
         showsMyLocationButton
-        minZoomLevel = {13}
+        minZoomLevel={13}
       >
         {markers.map((marker, center_id) => (
           <Marker
@@ -163,19 +133,47 @@ const MapScreen = ({ navigation }) => {
             coordinate={marker.coordinate}
             //  title={marker.title}
             //  description={marker.description}
+            onPress={() => setModalVisible(true)}
           >
-            <Callout
+            {/* <Callout
               style={styles.plainView}
-              onPress={() => navigation.navigate("Printer", {center: marker.center, tel: marker.tel})}
+              onPress={() => navigation.navigate("Printer", { center: marker.center, tel: marker.tel })}
             >
               <View>
                 <Text>{marker.center}</Text>
                 <Text>{marker.tel}</Text>
               </View>
-            </Callout>
+            </Callout> */}
           </Marker>
         ))}
       </MapView>
+
+
+      <View>
+       <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+            
+          </View>
+        </View>
+      </Modal>
+      </View>
+
     </View>
   );
 };
@@ -187,22 +185,57 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height,
+//    width: 300,
+//    height: 500
+
   },
-  bubble: {
+  centeredView: {
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // marginTop: 22,
+
+    //    backgroundColor: 'rgba(0,0,0,0.2)',
     flex: 1,
-    backgroundColor: "rgba(255,255,255,0.7)",
-    paddingHorizontal: 18,
-    paddingVertical: 12,
+    justifyContent: 'flex-end',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
     borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
   button: {
-    width: 80,
-    paddingHorizontal: 12,
-    alignItems: "center",
-    marginHorizontal: 10,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
   },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
 
 export default MapScreen;
