@@ -12,7 +12,7 @@ const navigator = createStackNavigator(
     Printer: PrinterScreen,
   },
   {
-    initialRouteName: 'Map',
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       title: '누구의 프린터',
     },
