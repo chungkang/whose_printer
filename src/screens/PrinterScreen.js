@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
+  FAB,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 
@@ -73,14 +74,14 @@ const PrinterScreen = ({ navigation }) => {
       >
         <View style={{ flex: 0.5 }}>
           <Text>{navigation.getParam('center')}</Text>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => Linking.openURL('tel:' + navigation.getParam('tel'))}
           >
             <Text style={styles.telNo}>
               {navigation.getParam('tel')}
             </Text>
           </TouchableOpacity>
-          
+
         </View>
         <View style={{ flex: 0.5 }}>
           <Button title="출력요청" color="#841584" />
@@ -95,6 +96,12 @@ const PrinterScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={item => item.name}
       />
+      {/* <FAB
+        style={styles.fab}
+        small
+        icon="plus"
+        onPress={() => console.log('Pressed')}
+      /> */}
     </View>
   );
 };
@@ -105,6 +112,12 @@ const styles = StyleSheet.create({
   },
   telNo: {
     color: '#0000FF'
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });
 

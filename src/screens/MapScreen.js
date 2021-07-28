@@ -52,9 +52,11 @@ async function delay_splash() {
 //   },
 // ];
 
+
+
 const MapScreen = ({ navigation }) => {
   state = {
-    printerId: null,
+    
   }
 
   delay_splash();
@@ -67,6 +69,15 @@ const MapScreen = ({ navigation }) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [center, setCenter] = useState('');
+  const [tel, setTel] = useState('');
+  
+
+  const clickMarker = (marker) => {
+    setModalVisible(true);
+    setCenter(marker.center);
+    setTel(marker.tel);
+  }
 
   // 화면이 처음 마운트 될 때마 실행
   useEffect(() => {
@@ -133,7 +144,7 @@ const MapScreen = ({ navigation }) => {
             coordinate={marker.coordinate}
             //  title={marker.title}
             //  description={marker.description}
-            onPress={() => setModalVisible(true)}
+            onPress={() => clickMarker(marker)}
           >
             {/* <Callout
               style={styles.plainView}
@@ -161,14 +172,18 @@ const MapScreen = ({ navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>{center}</Text>
+            <Text style={styles.modalText}>{tel}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
-            
+            <Button
+              title='출력'
+              onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
+              />
           </View>
         </View>
       </Modal>
