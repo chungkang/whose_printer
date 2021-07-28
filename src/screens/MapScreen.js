@@ -173,26 +173,33 @@ const MapScreen = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{center}</Text>
-              <Text style={styles.modalText}>{tel}</Text>
-              <Badge value="관공서" status="success" />
-              <Badge value="신규" status="primary" />
-              {/* <Badge value={<Text>관공서</Text>} /> */}
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
+
+              <View>
+                <Text style={styles.modalText}>{center}</Text>
+                <Text style={styles.modalText}>{tel}</Text>
+              </View>
+
+              <View style={{ flex: 1, flexDirection: 'row'}}>
+                <Badge style = {styles.badgeStyle} value="관공서" status="success" />
+                <Badge style = {styles.badgeStyle} value="신규" status="primary" />
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                >
+                  <Text style={styles.textStyle}>Hide Modal</Text>
+                </Pressable>
+              </View>
+              <View>
               <Button
-                title='출력'
-                onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
-              />
+                  title='출력'
+                    onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
+                />
+              </View>
+
             </View>
           </View>
         </Modal>
       </View>
-
     </View>
   );
 };
@@ -226,10 +233,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalView: {
-    margin: 20,
+    margin: 10,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 35,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -238,7 +245,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+//    flexDirection: "column"
   },
   button: {
     borderRadius: 20,
@@ -258,8 +266,13 @@ const styles = StyleSheet.create({
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center"
-  }
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  badgeStyle: {
+    margin: 10
+  },
 });
 
 export default MapScreen;
