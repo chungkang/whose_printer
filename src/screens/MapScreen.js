@@ -13,6 +13,8 @@ import {
 import * as Location from "expo-location";
 import centersMarkers from '../../assets/centers.json';
 import * as SplashScreen from 'expo-splash-screen';
+import { Badge } from 'react-native-elements'
+import { Searchbar } from 'react-native-paper';
 
 const { width, height } = Dimensions.get("window");
 
@@ -54,9 +56,10 @@ async function delay_splash() {
 
 
 
+
 const MapScreen = ({ navigation }) => {
-  state = {
-    
+  let state = {
+    search: '',
   }
 
   delay_splash();
@@ -71,7 +74,10 @@ const MapScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [center, setCenter] = useState('');
   const [tel, setTel] = useState('');
-  
+
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   const clickMarker = (marker) => {
     setModalVisible(true);
@@ -114,7 +120,7 @@ const MapScreen = ({ navigation }) => {
     console.log("렌더링 될 때 마다 실행");
   });
 
-  // 특정 prps, state가 바뀔 때 마다 샐행
+  // 특정 props, state가 바뀔 때 마다 샐행
   // useEffect(()=>{
   //   console.log('특정 값이 바뀔 때 실행');
   //   if(mounted.current){
@@ -126,6 +132,14 @@ const MapScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ position: 'absolute', top: 10, width: '100%' }}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={styles.searchbar}
+        />
+      </View>
       <MapView
         style={styles.map}
         initialRegion={{
@@ -142,51 +156,41 @@ const MapScreen = ({ navigation }) => {
           <Marker
             key={center_id}
             coordinate={marker.coordinate}
-            //  title={marker.title}
-            //  description={marker.description}
             onPress={() => clickMarker(marker)}
-          >
-            {/* <Callout
-              style={styles.plainView}
-              onPress={() => navigation.navigate("Printer", { center: marker.center, tel: marker.tel })}
-            >
-              <View>
-                <Text>{marker.center}</Text>
-                <Text>{marker.tel}</Text>
-              </View>
-            </Callout> */}
-          </Marker>
+          />
         ))}
       </MapView>
 
-
       <View>
-       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>{center}</Text>
-            <Text style={styles.modalText}>{tel}</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-            <Button
-              title='출력'
-              onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{center}</Text>
+              <Text style={styles.modalText}>{tel}</Text>
+              <Badge value="관공서" status="success" />
+              <Badge value="신규" status="primary" />
+              {/* <Badge value={<Text>관공서</Text>} /> */}
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+              <Button
+                title='출력'
+                onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
               />
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
       </View>
 
     </View>
@@ -199,20 +203,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  searchbar: {
+    borderRadius: 10,
+    margin: 10,
+    color: '#000',
+    borderColor: '#666',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    height: 45,
+    paddingHorizontal: 10,
+    fontSize: 18,
+  },
   map: {
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").height,
-//    width: 300,
-//    height: 500
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    //    width: 300,
+    //    height: 500
 
   },
   centeredView: {
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginTop: 22,
-
-    //    backgroundColor: 'rgba(0,0,0,0.2)',
     flex: 1,
     justifyContent: 'flex-end',
   },

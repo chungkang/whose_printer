@@ -1,19 +1,21 @@
 import React from 'react';
-import { Text, StyleSheet, View, Button, TouchableOpacity, Pressable } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
   return (
     <View>
+
+
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => navigation.navigate('Map')}
       >
-        <Text style={styles.button}>공방검색 ></Text>
+        <Text style={styles.button}>공방찾기 ></Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => alert('단골공방') }
+        onPress={() => alert('단골공방')}
       >
         <Text style={styles.button}>단골공방 ></Text>
       </TouchableOpacity>
