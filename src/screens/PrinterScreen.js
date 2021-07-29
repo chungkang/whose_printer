@@ -11,6 +11,7 @@ import {
   FAB,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
+import { ListItem, Avatar } from 'react-native-elements'
 
 // 리스트에 쓰이는 커스텀 태그 컴포넌트
 const Item = ({ name, age }) => (

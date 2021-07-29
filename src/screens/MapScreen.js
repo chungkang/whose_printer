@@ -15,6 +15,7 @@ import centersMarkers from '../../assets/centers.json';
 import * as SplashScreen from 'expo-splash-screen';
 import { Badge } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width, height } = Dimensions.get("window");
 
@@ -174,28 +175,29 @@ const MapScreen = ({ navigation }) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
 
-              <View>
+              <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.modalText}>{center}</Text>
-                <Text style={styles.modalText}>{tel}</Text>
+                {/* <Button
+                  onPress={() => setModalVisible(!modalVisible)}
+                  title="X"
+                /> */}
               </View>
 
-              <View style={{ flex: 1, flexDirection: 'row'}}>
-                <Badge style = {styles.badgeStyle} value="관공서" status="success" />
-                <Badge style = {styles.badgeStyle} value="신규" status="primary" />
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable>
+              <View style={{ flex: 1, flexDirection: 'row', margin: 10 }}>
+                <Badge style={styles.badgeStyle} value="관공서" status="success" />
+                <Badge style={styles.badgeStyle} value="신규" status="primary" />
+                <Badge style={styles.badgeStyle} value="핫" status="error" />
               </View>
-              <View>
-              <Button
+              <View style={{ margin: 20, flexDirection: 'row', alignItems: 'flex-end'}}>
+                <Button
+                    title='대화'
+                    onPress={() => alert('대화창')}
+                  />
+                <Button
                   title='출력'
-                    onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
+                  onPress={() => navigation.navigate("Printer", { center: center, tel: tel })}
                 />
               </View>
-
             </View>
           </View>
         </Modal>
@@ -246,7 +248,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-//    flexDirection: "column"
   },
   button: {
     borderRadius: 20,
@@ -271,7 +272,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   badgeStyle: {
-    margin: 10
+    padding:10
   },
 });
 
