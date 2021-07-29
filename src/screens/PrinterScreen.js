@@ -5,13 +5,11 @@ import {
   StyleSheet,
   FlatList,
   Button,
-  ScrollView,
   TouchableOpacity,
   Linking,
-  FAB,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem } from 'react-native-elements';
 
 // 리스트에 쓰이는 커스텀 태그 컴포넌트
 const Item = ({ name, age }) => (
@@ -97,12 +95,6 @@ const PrinterScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={item => item.name}
       />
-      {/* <FAB
-        style={styles.fab}
-        small
-        icon="plus"
-        onPress={() => console.log('Pressed')}
-      /> */}
     </View>
   );
 };

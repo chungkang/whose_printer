@@ -1,11 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+
+function sleep(ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+async function delay_splash() {
+  await SplashScreen.preventAutoHideAsync();
+  await sleep(2000);
+  await SplashScreen.hideAsync();
+};
 
 const HomeScreen = ({ navigation }) => {
+  delay_splash();
+
+  // 화면이 처음 마운트 될 때마 실행
+  useEffect(() => {
+    console.log("화면이 마운트 될 때 실행");
+    
+  }, []);
+
   return (
     <View>
-
-
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => navigation.navigate('Map')}

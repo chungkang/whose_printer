@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MapView, { Marker, Callout } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import {
   StyleSheet,
   Text,
@@ -7,15 +7,13 @@ import {
   Dimensions,
   Alert,
   Modal,
-  Pressable,
   Button,
 } from "react-native";
 import * as Location from "expo-location";
 import centersMarkers from '../../assets/centers.json';
-import * as SplashScreen from 'expo-splash-screen';
 import { Badge } from 'react-native-elements'
 import { Searchbar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { TouchableOpacity } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -28,18 +26,6 @@ let id = 0;
 
 // 주민센터 위치 좌표
 const markers = Object.values(centersMarkers);
-
-function sleep(ms) {
-  return new Promise(
-    resolve => setTimeout(resolve, ms)
-  );
-}
-
-async function delay_splash() {
-  await SplashScreen.preventAutoHideAsync();
-  await sleep(3000);
-  await SplashScreen.hideAsync();
-};
 
 // 마커 임시로 사용
 // const markers = [
@@ -55,15 +41,10 @@ async function delay_splash() {
 //   },
 // ];
 
-
-
-
 const MapScreen = ({ navigation }) => {
   let state = {
     search: '',
   }
-
-  delay_splash();
 
   // 현위치 좌표
   const [currentLatitude, setCurrentLatitude] = useState(LATITUDE);
@@ -177,10 +158,9 @@ const MapScreen = ({ navigation }) => {
 
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.modalText}>{center}</Text>
-                {/* <Button
-                  onPress={() => setModalVisible(!modalVisible)}
-                  title="X"
-                /> */}
+                <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                  <Text>X</Text>
+                </TouchableOpacity>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row', margin: 10 }}>
