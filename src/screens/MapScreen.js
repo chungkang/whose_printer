@@ -8,6 +8,7 @@ import {
   Alert,
   Modal,
   Button,
+  Image
 } from "react-native";
 import * as Location from "expo-location";
 import centersMarkers from '../../assets/centers.json';
@@ -139,7 +140,9 @@ const MapScreen = ({ navigation }) => {
             key={center_id}
             coordinate={marker.coordinate}
             onPress={() => clickMarker(marker)}
-          />
+          >
+            <Image source={require('../../assets/images/marker/workshop.png')} style={{height: 45, width:35 }} />
+          </Marker>
         ))}
       </MapView>
 
