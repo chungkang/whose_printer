@@ -9,7 +9,7 @@ import {
   Linking,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { ListItem } from 'react-native-elements';
+import { ListItem, FAB, CheckBox } from 'react-native-elements';
 
 // 리스트에 쓰이는 커스텀 태그 컴포넌트
 const Item = ({ name, age }) => (
@@ -20,9 +20,18 @@ const Item = ({ name, age }) => (
   </View>
 );
 
+
 const PrinterScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
-    <Item name={item.name} age={item.age} />
+    <ListItem>
+      <ListItem.Content>
+        
+        <ListItem.Title>{item.name}</ListItem.Title>
+        <View style={styles.subtitleView}>
+          <Text style={styles.ratingText}>5 months ago</Text>
+        </View>
+      </ListItem.Content>
+    </ListItem>
   );
 
   let baseList = [
@@ -82,19 +91,30 @@ const PrinterScreen = ({ navigation }) => {
           </TouchableOpacity>
 
         </View>
-        <View style={{ flex: 0.5 }}>
-          <Button title="출력요청" color="#841584" />
-        </View>
+     
       </View>
 
-      <View>
-        <Button title="파일 업로드" onPress={_pickDocument} />
-      </View>
+
       <FlatList
         data={list}
         renderItem={renderItem}
         keyExtractor={item => item.name}
+        style={{ padding: 5 }}
       />
+
+
+      <View>
+        <Button title="파일 업로드" onPress={_pickDocument} />
+      </View>
+
+      <View>
+          <FAB
+            title="출력요청"
+            style={styles.fab}
+            placement="right"
+            
+          />
+        </View>
     </View>
   );
 };
@@ -106,12 +126,22 @@ const styles = StyleSheet.create({
   telNo: {
     color: '#0000FF'
   },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
+  subtitleView: {
+    flexDirection: 'row',
+    paddingLeft: 10,
+    paddingTop: 5,
   },
+  ratingImage: {
+    height: 19.21,
+    width: 100
+  },
+  ratingText: {
+    paddingLeft: 10,
+    color: 'grey'
+  },
+  fab: {
+
+  }
 });
 
 export default PrinterScreen;
