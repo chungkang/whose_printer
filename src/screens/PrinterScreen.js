@@ -9,7 +9,7 @@ import {
   Linking,
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
-import { ListItem, FAB, CheckBox } from 'react-native-elements';
+import { ListItem, FAB, CheckBox, Card, Rating, AirbnbRating } from 'react-native-elements';
 
 // 리스트에 쓰이는 커스텀 태그 컴포넌트
 const Item = ({ name, age }) => (
@@ -25,7 +25,7 @@ const PrinterScreen = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <ListItem>
       <ListItem.Content>
-        
+
         <ListItem.Title>{item.name}</ListItem.Title>
         <View style={styles.subtitleView}>
           <Text style={styles.ratingText}>5 months ago</Text>
@@ -73,27 +73,23 @@ const PrinterScreen = ({ navigation }) => {
 
   return (
     <View>
-      <View
-        style={{
-          flexDirection: "row",
-          height: 100,
-          padding: 20,
-        }}
-      >
-        <View style={{ flex: 0.5 }}>
-          <Text>{navigation.getParam('center')}</Text>
-          <TouchableOpacity
-            onPress={() => Linking.openURL('tel:' + navigation.getParam('tel'))}
-          >
-            <Text style={styles.telNo}>
-              {navigation.getParam('tel')}
-            </Text>
-          </TouchableOpacity>
-
-        </View>
-     
-      </View>
-
+      <Card>
+        <Card.Title>{navigation.getParam('center')}</Card.Title>
+        <Card.Divider />
+        <TouchableOpacity
+          onPress={() => Linking.openURL('tel:' + navigation.getParam('tel'))}
+        >
+          <Text style={styles.telNo}>
+            {navigation.getParam('tel')}
+          </Text>
+        </TouchableOpacity>
+        <AirbnbRating
+          count={5}
+          reviews={["Terrible", "Bad", "Meh", "OK", "Good"]}
+          defaultRating={5}
+          size={20}
+        />
+      </Card>
 
       <FlatList
         data={list}
@@ -102,19 +98,18 @@ const PrinterScreen = ({ navigation }) => {
         style={{ padding: 5 }}
       />
 
-
       <View>
         <Button title="파일 업로드" onPress={_pickDocument} />
       </View>
 
       <View>
-          <FAB
-            title="출력요청"
-            style={styles.fab}
-            placement="right"
-            
-          />
-        </View>
+        <FAB
+          title="출력요청"
+          style={styles.fab}
+          placement="right"
+
+        />
+      </View>
     </View>
   );
 };
